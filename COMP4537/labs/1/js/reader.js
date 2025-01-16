@@ -54,7 +54,6 @@ class Reader {
   displayNotes(notes) {
     this.readerContainer.innerHTML = ""; // Clear existing notes in reader
     notes.forEach((noteContent, index) => {
-      if (noteContent === "" || noteContent === null) return;
       new ReaderNote(noteContent, this.readerContainer);
     });
     if (notes.length === 0) {

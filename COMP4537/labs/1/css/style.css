@@ -11,6 +11,7 @@ body {
   font-size: 0.9em;
   color: gray;
 }
+
 .note {
   margin-bottom: 10px;
   display: flex;
@@ -23,7 +24,7 @@ body {
 
 .reader-note {
   margin-bottom: 10px;
-  padding: 10px 15px;
+  padding: 5px 10px;
   display: flex;
   align-items: center;
   background-color: #fdfd96; /* Light yellow, resembling sticky notes */
@@ -35,6 +36,9 @@ body {
   line-height: 1.5; /* Improve readability */
   width: fit-content; /* Adjust to the content size */
   max-width: 100%; /* Ensure it doesn’t overflow */
+  min-width: 15px;
+  min-height: 15px;
+  box-sizing: content-box;
 }
 
 #save-notes {

@@ -39,6 +39,7 @@ class NotesManager {
     this.initializeElements();
     this.initializeData();
     this.loadNotes();
+    this.startWriter();
   }
 
   initializeElements() {
@@ -60,10 +61,6 @@ class NotesManager {
       this.clearNotes();
     }).getElement();
 
-    this.saveNotesButton = new Button(UserMessages.saveNotes, () => {
-      this.saveNotesToLocalStorage();
-    }).getElement();
-
     const backButton = new Button(UserMessages.backToHome, () => {
       location.href = "index.html";
     }).getElement();
@@ -71,20 +68,24 @@ class NotesManager {
     // Assign IDs to the buttons
     this.addNoteButton.id = "add-note";
     this.clearNotesButton.id = "clear";
-    this.saveNotesButton.id = "save-notes";
 
     // Append buttons to the DOM
     const container = document.createElement("div");
     container.id = "button-container";
     container.appendChild(this.addNoteButton);
     container.appendChild(this.clearNotesButton);
-    container.appendChild(this.saveNotesButton);
     container.appendChild(backButton);
     document.body.appendChild(container);
   }
 
   initializeData() {
     this.notes = JSON.parse(localStorage.getItem("notes")) || [];
+  }
+
+  startWriter() {
+    setInterval(() => {
+      this.saveNotesToLocalStorage();
+    }, 2000);
   }
 
   updatetimestamp() {
