@@ -1,81 +1,122 @@
-//this file was created with the help of chatGPT
-const notesContainer = document.getElementById("notes-container");
-const addNoteButton = document.getElementById("add-note");
-const writerTimestamp = document.getElementById("writer-timestamp");
-const clearButton = document.getElementById("clear");
+//This file was created with the help of chatGPT
+class Button {
+  constructor(label, onClick) {
+    this.button = document.createElement("button");
+    this.button.textContent = label;
+    this.button.addEventListener("click", onClick);
+  }
 
-function updateWriterTimestamp() {
-  const now = new Date().toLocaleTimeString();
-  writerTimestamp.textContent = `Last saved: ${now}`;
-  localStorage.setItem("lastSavedTime", now);
+  getElement() {
+    return this.button;
+  }
 }
 
-function saveNoteToLocalStorage(noteContent, index) {
-  const notes = JSON.parse(localStorage.getItem("notes")) || [];
-  if (noteContent.trim() !== "") {
-    if (index !== undefined) {
-      notes[index] = noteContent;
-    } else {
-      notes.push(noteContent);
+class Note {
+  constructor(noteContent, index, removeCallback) {
+    this.noteContent = noteContent || "";
+    this.index = index;
+    this.removeCallback = removeCallback;
+    this.noteDiv = this.createNoteElement(index);
+  }
+
+  createNoteElement(index) {
+    const noteDiv = document.createElement("div");
+    noteDiv.classList.add("note");
+    noteDiv.id = index;
+
+    const textarea = document.createElement("textarea");
+    textarea.value = this.noteContent;
+
+    const removeButton = new Button("Remove", () => {
+      noteDiv.remove();
+      this.removeCallback(textarea.value);
+    }).getElement();
+
+    noteDiv.appendChild(textarea);
+    noteDiv.appendChild(removeButton);
+
+    return noteDiv;
+  }
+
+  getElement() {
+    return this.noteDiv;
+  }
+}
+
+class NotesManager {
+  constructor() {
+    this.initializeElements();
+    this.initializeData();
+    this.addEventListeners();
+    this.loadNotes();
+  }
+
+  initializeElements() {
+    this.notesContainer = document.getElementById("notes-container");
+    this.addNoteButton = document.getElementById("add-note");
+    this.clearNotesButton = document.getElementById("clear");
+    this.writerTimestamp = document.getElementById("writer-timestamp");
+    this.saveNotesButton = document.getElementById("save-notes");
+  }
+
+  initializeData() {
+    this.notes = JSON.parse(localStorage.getItem("notes")) || [];
+  }
+
+  addEventListeners() {
+    this.addNoteButton.addEventListener("click", () =>
+      this.createAndAppendNote()
+    );
+    this.clearNotesButton.addEventListener("click", () => this.clearNotes());
+    this.saveNotesButton.addEventListener("click", () =>
+      this.saveNotesToLocalStorage()
+    );
+  }
+
+  updateWriterTimestamp() {
+    const now = new Date().toLocaleTimeString();
+    this.writerTimestamp.textContent = `Last saved: ${now}`;
+    localStorage.setItem("lastSavedTime", now);
+  }
+
+  saveNotesToLocalStorage() {
+    localStorage.setItem("notes", []);
+    this.notes = [];
+    for (let i = 0; i < this.notesContainer.children.length; i++) {
+      this.notes.push(this.notesContainer.children[i].children[0].value);
     }
-    localStorage.setItem("notes", JSON.stringify(notes));
-    updateWriterTimestamp();
+    localStorage.setItem("notes", JSON.stringify(this.notes));
+  }
+
+  clearNotes() {
+    localStorage.removeItem("notes");
+    this.notesContainer.innerHTML = "";
+  }
+
+  removeNoteFromLocalStorage(noteContent) {
+    const index = this.notes.indexOf(noteContent);
+    if (index !== -1) {
+      this.notes.splice(index, 1);
+      localStorage.setItem("notes", JSON.stringify(this.notes));
+      this.updateWriterTimestamp();
+    }
+  }
+
+  createAndAppendNote(noteContent = "", index = undefined) {
+    const note = new Note(noteContent, index, (content) =>
+      this.removeNoteFromLocalStorage(content)
+    );
+    this.notesContainer.appendChild(note.getElement());
+  }
+
+  loadNotes() {
+    this.notes.forEach((note) => this.createAndAppendNote(note, note.id));
+
+    const lastSavedTime = localStorage.getItem("lastSavedTime");
+    if (lastSavedTime) {
+      this.writerTimestamp.textContent = `Last saved: ${lastSavedTime}`;
+    }
   }
 }
 
-function removeNoteFromLocalStorage(noteContent) {
-  const notes = JSON.parse(localStorage.getItem("notes")) || [];
-  const index = notes.indexOf(noteContent);
-  if (index !== -1) {
-    notes.splice(index, 1);
-    localStorage.setItem("notes", JSON.stringify(notes));
-    updateWriterTimestamp();
-  }
-}
-
-function createNoteElement(noteContent = "", index) {
-  const noteDiv = document.createElement("div");
-  noteDiv.classList.add("note");
-
-  const textarea = document.createElement("textarea");
-  if (noteContent != "") {
-    textarea.value = noteContent;
-  }
-
-  const storeButton = document.createElement("button");
-  storeButton.textContent = "Store";
-  storeButton.addEventListener("click", () => {
-    saveNoteToLocalStorage(textarea.value, index);
-  });
-
-  const removeButton = document.createElement("button");
-  removeButton.textContent = "Remove";
-  removeButton.addEventListener("click", () => {
-    removeNoteFromLocalStorage(textarea.value, index);
-    notesContainer.removeChild(noteDiv);
-  });
-
-  noteDiv.appendChild(textarea);
-  noteDiv.appendChild(storeButton);
-  noteDiv.appendChild(removeButton);
-  notesContainer.appendChild(noteDiv);
-}
-
-function loadNotes() {
-  const notes = JSON.parse(localStorage.getItem("notes")) || [];
-  notes.forEach((note, index) => createNoteElement(note, index));
-
-  const lastSavedTime = localStorage.getItem("lastSavedTime");
-  if (lastSavedTime) {
-    writerTimestamp.textContent = `Last saved: ${lastSavedTime}`;
-  }
-}
-
-function deleteAllNotes() {
-  localStorage.removeItem("notes");
-  notesContainer.innerText = "";
-}
-
-addNoteButton.addEventListener("click", () => createNoteElement());
-clearButton.addEventListener("click", deleteAllNotes);
-loadNotes();
+new NotesManager();
