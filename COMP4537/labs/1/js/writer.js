@@ -1,3 +1,5 @@
+import UserMessages from "../lang/messages/en/user.js"; // Import user messages
+
 //This file was created with the help of chatGPT
 class Button {
   constructor(label, onClick) {
@@ -27,7 +29,7 @@ class Note {
     const textarea = document.createElement("textarea");
     textarea.value = this.noteContent;
 
-    const removeButton = new Button("Remove", () => {
+    const removeButton = new Button(UserMessages.remove, () => {
       noteDiv.remove();
       this.removeCallback(textarea.value);
     }).getElement();
@@ -55,9 +57,15 @@ class NotesManager {
     // Writer elements
     this.notesContainer = document.getElementById("notes-container");
     this.addNoteButton = document.getElementById("add-note");
+    this.addNoteButton.innerHTML = UserMessages.addNote;
     this.clearNotesButton = document.getElementById("clear");
+    this.clearNotesButton.innerHTML = UserMessages.clearAllNotes;
     this.timestamp = document.getElementById("timestamp");
     this.saveNotesButton = document.getElementById("save-notes");
+    this.saveNotesButton.innerHTML = UserMessages.saveNotes;
+    document.getElementsByTagName("title")[0].innerHTML = UserMessages.writer;
+    document.getElementById("title").innerHTML = UserMessages.writer;
+    document.getElementById("back").innerHTML = UserMessages.backToHome;
   }
 
   initializeData() {
@@ -76,7 +84,7 @@ class NotesManager {
 
   updatetimestamp() {
     const now = new Date().toLocaleTimeString();
-    this.timestamp.textContent = `Last saved: ${now}`;
+    this.timestamp.textContent = `${UserMessages.lastSaved}${now}`;
     localStorage.setItem("lastSavedTime", now);
   }
 
@@ -113,10 +121,9 @@ class NotesManager {
 
   loadNotes() {
     this.notes.forEach((note) => this.createAndAppendNote(note, note.id));
-
     const lastSavedTime = localStorage.getItem("lastSavedTime");
     if (lastSavedTime) {
-      this.timestamp.textContent = `Last saved: ${lastSavedTime}`;
+      this.timestamp.textContent = `${UserMessages.lastSaved}${lastSavedTime}`;
     }
   }
 }

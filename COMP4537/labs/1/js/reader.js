@@ -1,3 +1,4 @@
+// This file was created with the help of chatGPT
 class Reader {
   constructor(readerContainerId, timestampContainerId) {
     this.readerContainer = document.getElementById(readerContainerId);
