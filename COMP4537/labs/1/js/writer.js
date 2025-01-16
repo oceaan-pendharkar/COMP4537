@@ -52,10 +52,11 @@ class NotesManager {
   }
 
   initializeElements() {
+    // Writer elements
     this.notesContainer = document.getElementById("notes-container");
     this.addNoteButton = document.getElementById("add-note");
     this.clearNotesButton = document.getElementById("clear");
-    this.writerTimestamp = document.getElementById("writer-timestamp");
+    this.timestamp = document.getElementById("timestamp");
     this.saveNotesButton = document.getElementById("save-notes");
   }
 
@@ -73,9 +74,9 @@ class NotesManager {
     );
   }
 
-  updateWriterTimestamp() {
+  updatetimestamp() {
     const now = new Date().toLocaleTimeString();
-    this.writerTimestamp.textContent = `Last saved: ${now}`;
+    this.timestamp.textContent = `Last saved: ${now}`;
     localStorage.setItem("lastSavedTime", now);
   }
 
@@ -86,6 +87,7 @@ class NotesManager {
       this.notes.push(this.notesContainer.children[i].children[0].value);
     }
     localStorage.setItem("notes", JSON.stringify(this.notes));
+    this.updatetimestamp();
   }
 
   clearNotes() {
@@ -98,7 +100,7 @@ class NotesManager {
     if (index !== -1) {
       this.notes.splice(index, 1);
       localStorage.setItem("notes", JSON.stringify(this.notes));
-      this.updateWriterTimestamp();
+      this.updatetimestamp();
     }
   }
 
@@ -114,7 +116,7 @@ class NotesManager {
 
     const lastSavedTime = localStorage.getItem("lastSavedTime");
     if (lastSavedTime) {
-      this.writerTimestamp.textContent = `Last saved: ${lastSavedTime}`;
+      this.timestamp.textContent = `Last saved: ${lastSavedTime}`;
     }
   }
 }

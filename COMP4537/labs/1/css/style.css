@@ -19,3 +19,36 @@ body {
   flex: 1;
   margin-right: 10px;
 }
+
+.reader-note {
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  background-color: #fdfd96; /* Light yellow, resembling sticky notes */
+  border: 1px solid #f0e68c; /* A slightly darker yellow for the border */
+  border-radius: 8px; /* Rounded corners for a softer appearance */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for a lifted look */
+  font-family: "Arial", sans-serif; /* Clean, readable font */
+  font-size: 14px; /* Adjust text size */
+  line-height: 1.5; /* Improve readability */
+  width: fit-content; /* Adjust to the content size */
+  max-width: 100%; /* Ensure it doesn’t overflow */
+}
+
+#save-notes {
+  background-color: green;
+}
+
+#clear {
+  background-color: red;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  background-color: black;
+}
