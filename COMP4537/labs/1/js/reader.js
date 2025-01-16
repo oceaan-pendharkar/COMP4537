@@ -1,6 +1,26 @@
 import UserMessages from "../lang/messages/en/user.js";
 
 // This file was created with the help of chatGPT
+class ReaderNote {
+  constructor(noteContent, container) {
+    this.noteContent = noteContent || "";
+    this.container = container;
+    this.noteDiv = this.createNoteElement();
+  }
+
+  createNoteElement() {
+    const noteDiv = document.createElement("div");
+    noteDiv.classList.add("reader-note");
+    noteDiv.textContent = this.noteContent;
+    this.container.appendChild(noteDiv);
+    return noteDiv;
+  }
+
+  getElement() {
+    return this.noteDiv;
+  }
+}
+
 class Reader {
   constructor(readerContainerId, timestampContainerId) {
     this.readerContainer = document.getElementById(readerContainerId);
@@ -30,16 +50,17 @@ class Reader {
     this.readerContainer.innerHTML = ""; // Clear existing notes in reader
     notes.forEach((noteContent, index) => {
       if (noteContent === "" || noteContent === null) return;
-      const noteDiv = document.createElement("div");
-      noteDiv.classList.add("reader-note");
-      noteDiv.textContent = noteContent;
-      this.readerContainer.appendChild(noteDiv);
+      new ReaderNote(noteContent, this.readerContainer);
     });
     if (notes.length === 0) {
-      const noteDiv = document.createElement("p");
-      noteDiv.textContent = UserMessages.noNotes;
-      this.readerContainer.appendChild(noteDiv);
+      this.displayNoNotesMessage();
     }
+  }
+
+  displayNoNotesMessage() {
+    const noteDiv = document.createElement("p");
+    noteDiv.textContent = UserMessages.noNotes;
+    this.readerContainer.appendChild(noteDiv);
   }
 
   updateTimestamp() {

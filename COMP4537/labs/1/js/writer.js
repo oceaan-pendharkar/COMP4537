@@ -13,7 +13,7 @@ class Button {
   }
 }
 
-class Note {
+class WriterNote {
   constructor(noteContent, index, removeCallback) {
     this.noteContent = noteContent || "";
     this.index = index;
@@ -113,7 +113,7 @@ class NotesManager {
   }
 
   createAndAppendNote(noteContent = "", index = undefined) {
-    const note = new Note(noteContent, index, (content) =>
+    const note = new WriterNote(noteContent, index, (content) =>
       this.removeNoteFromLocalStorage(content)
     );
     this.notesContainer.appendChild(note.getElement());
