@@ -53,3 +53,12 @@ button {
   cursor: pointer;
   background-color: black;
 }
+
+#button-container {
+  display: flex; /* Allows you to align buttons horizontally or vertically */
+  justify-content: center; /* Centers buttons horizontally */
+  align-items: center; /* Centers buttons vertically */
+  gap: 10px; /* Adds space between buttons */
+  padding: 15px; /* Adds padding inside the container */
+  margin: 0 auto; /* Center the container horizontally */
+}

@@ -1,4 +1,5 @@
 import UserMessages from "../lang/messages/en/user.js";
+import { Button } from "./button.js";
 
 // This file was created with the help of chatGPT
 class ReaderNote {
@@ -25,6 +26,11 @@ class Reader {
   constructor(readerContainerId, timestampContainerId) {
     this.readerContainer = document.getElementById(readerContainerId);
     this.readerTimestamp = document.getElementById(timestampContainerId);
+    this.buttonContainer = document.getElementById("button-container");
+    const backButton = new Button(UserMessages.backToHome, () => {
+      location.href = "index.html";
+    }).getElement();
+    this.buttonContainer.appendChild(backButton);
     this.displayUserMessages();
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     this.displayNotes(notes);
@@ -35,7 +41,6 @@ class Reader {
   displayUserMessages() {
     document.getElementsByTagName("title")[0].innerHTML = UserMessages.reader;
     document.getElementById("title").innerHTML = UserMessages.reader;
-    document.getElementById("back").innerHTML = UserMessages.backToHome;
   }
 
   startReader() {

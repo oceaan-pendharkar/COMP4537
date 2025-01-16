@@ -1,18 +1,7 @@
 import UserMessages from "../lang/messages/en/user.js"; // Import user messages
+import { Button } from "./button.js";
 
 //This file was created with the help of chatGPT
-class Button {
-  constructor(label, onClick) {
-    this.button = document.createElement("button");
-    this.button.textContent = label;
-    this.button.addEventListener("click", onClick);
-  }
-
-  getElement() {
-    return this.button;
-  }
-}
-
 class WriterNote {
   constructor(noteContent, index, removeCallback) {
     this.noteContent = noteContent || "";
@@ -49,7 +38,6 @@ class NotesManager {
   constructor() {
     this.initializeElements();
     this.initializeData();
-    this.addEventListeners();
     this.loadNotes();
   }
 
@@ -59,31 +47,44 @@ class NotesManager {
     this.timestamp = document.getElementById("timestamp");
     document.getElementsByTagName("title")[0].innerHTML = UserMessages.writer;
     document.getElementById("title").innerHTML = UserMessages.writer;
-    document.getElementById("back").innerHTML = UserMessages.backToHome;
     this.initializeButtons();
   }
 
   initializeButtons() {
-    this.addNoteButton = document.getElementById("add-note");
-    this.clearNotesButton = document.getElementById("clear");
-    this.saveNotesButton = document.getElementById("save-notes");
-    this.addNoteButton.innerHTML = UserMessages.addNote;
-    this.clearNotesButton.innerHTML = UserMessages.clearAllNotes;
-    this.saveNotesButton.innerHTML = UserMessages.saveNotes;
+    // Dynamically create buttons
+    this.addNoteButton = new Button(UserMessages.addNote, () => {
+      this.createAndAppendNote();
+    }).getElement();
+
+    this.clearNotesButton = new Button(UserMessages.clearAllNotes, () => {
+      this.clearNotes();
+    }).getElement();
+
+    this.saveNotesButton = new Button(UserMessages.saveNotes, () => {
+      this.saveNotesToLocalStorage();
+    }).getElement();
+
+    const backButton = new Button(UserMessages.backToHome, () => {
+      location.href = "index.html";
+    }).getElement();
+
+    // Assign IDs to the buttons
+    this.addNoteButton.id = "add-note";
+    this.clearNotesButton.id = "clear";
+    this.saveNotesButton.id = "save-notes";
+
+    // Append buttons to the DOM
+    const container = document.createElement("div");
+    container.id = "button-container";
+    container.appendChild(this.addNoteButton);
+    container.appendChild(this.clearNotesButton);
+    container.appendChild(this.saveNotesButton);
+    container.appendChild(backButton);
+    document.body.appendChild(container);
   }
 
   initializeData() {
     this.notes = JSON.parse(localStorage.getItem("notes")) || [];
-  }
-
-  addEventListeners() {
-    this.addNoteButton.addEventListener("click", () =>
-      this.createAndAppendNote()
-    );
-    this.clearNotesButton.addEventListener("click", () => this.clearNotes());
-    this.saveNotesButton.addEventListener("click", () =>
-      this.saveNotesToLocalStorage()
-    );
   }
 
   updatetimestamp() {
