@@ -56,16 +56,20 @@ class NotesManager {
   initializeElements() {
     // Writer elements
     this.notesContainer = document.getElementById("notes-container");
-    this.addNoteButton = document.getElementById("add-note");
-    this.addNoteButton.innerHTML = UserMessages.addNote;
-    this.clearNotesButton = document.getElementById("clear");
-    this.clearNotesButton.innerHTML = UserMessages.clearAllNotes;
     this.timestamp = document.getElementById("timestamp");
-    this.saveNotesButton = document.getElementById("save-notes");
-    this.saveNotesButton.innerHTML = UserMessages.saveNotes;
     document.getElementsByTagName("title")[0].innerHTML = UserMessages.writer;
     document.getElementById("title").innerHTML = UserMessages.writer;
     document.getElementById("back").innerHTML = UserMessages.backToHome;
+    this.initializeButtons();
+  }
+
+  initializeButtons() {
+    this.addNoteButton = document.getElementById("add-note");
+    this.clearNotesButton = document.getElementById("clear");
+    this.saveNotesButton = document.getElementById("save-notes");
+    this.addNoteButton.innerHTML = UserMessages.addNote;
+    this.clearNotesButton.innerHTML = UserMessages.clearAllNotes;
+    this.saveNotesButton.innerHTML = UserMessages.saveNotes;
   }
 
   initializeData() {
