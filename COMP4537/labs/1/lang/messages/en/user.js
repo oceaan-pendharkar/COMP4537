@@ -7,6 +7,9 @@ const UserMessages = {
   writer: "Writer",
   remove: "Remove",
   lastSaved: "Last saved: ",
+  reader: "Reader",
+  noNotes: "No notes to display",
+  lastFetched: "Last fetched: ",
 };
 
 export default UserMessages;

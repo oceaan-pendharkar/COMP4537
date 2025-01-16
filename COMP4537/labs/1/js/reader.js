@@ -1,12 +1,21 @@
+import UserMessages from "../lang/messages/en/user.js";
+
 // This file was created with the help of chatGPT
 class Reader {
   constructor(readerContainerId, timestampContainerId) {
     this.readerContainer = document.getElementById(readerContainerId);
     this.readerTimestamp = document.getElementById(timestampContainerId);
+    this.displayUserMessages();
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     this.displayNotes(notes);
     this.updateTimestamp();
     this.startReader();
+  }
+
+  displayUserMessages() {
+    document.getElementsByTagName("title")[0].innerHTML = UserMessages.reader;
+    document.getElementById("title").innerHTML = UserMessages.reader;
+    document.getElementById("back").innerHTML = UserMessages.backToHome;
   }
 
   startReader() {
@@ -28,14 +37,14 @@ class Reader {
     });
     if (notes.length === 0) {
       const noteDiv = document.createElement("p");
-      noteDiv.textContent = "No notes to display";
+      noteDiv.textContent = UserMessages.noNotes;
       this.readerContainer.appendChild(noteDiv);
     }
   }
 
   updateTimestamp() {
     const now = new Date().toLocaleTimeString();
-    this.readerTimestamp.textContent = `Last fetched: ${now}`;
+    this.readerTimestamp.textContent = `${UserMessages.lastFetched}${now}`;
   }
 }
 
