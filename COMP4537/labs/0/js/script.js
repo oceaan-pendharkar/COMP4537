@@ -9,12 +9,12 @@ class GameButton {
   }
 
   // Method to create the button element and set its properties
-  createElement(hidden = false) {
+  createElement(idHidden = false) {
     const button = document.createElement("button");
     button.id = this.id;
     button.style.backgroundColor = this.color;
     button.style.color = getContrastingColor(this.color);
-    if (!hidden) {
+    if (!idHidden) {
       button.innerHTML = this.id;
     }
     button.addEventListener("click", () => {
@@ -149,6 +149,7 @@ const startGame = function () {
   board.clearBoard();
 
   const n = parseInt(document.getElementById("btnCount").value);
+  // validation for input
   if (isNaN(n) || n < 3 || n > 7) {
     alert(UserMessages.invalidInput);
     textField.disabled = false;

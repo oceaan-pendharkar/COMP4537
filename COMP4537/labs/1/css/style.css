@@ -26,7 +26,7 @@ body {
   margin-bottom: 10px;
   padding: 5px 10px;
   display: flex;
-  align-items: center;
+  align-items: center; /*controls vertical alignment/cross-axis alignment*/
   background-color: #fdfd96; /* Light yellow, resembling sticky notes */
   border: 1px solid #f0e68c; /* A slightly darker yellow for the border */
   border-radius: 8px; /* Rounded corners for a softer appearance */
@@ -38,7 +38,7 @@ body {
   max-width: 100%; /* Ensure it doesn’t overflow */
   min-width: 15px;
   min-height: 15px;
-  box-sizing: content-box;
+  box-sizing: content-box; /*excludes padding and borders from the size of the box*/
 }
 
 #save-notes {
