@@ -1,3 +1,9 @@
 {
-  "greeting": "Hello %1, What a beautiful day. Server current date and time is %2"
+  "greeting": "Hello %1, What a beautiful day. Server current date and time is %2",
+  "getDate404": "Missing 'name' query parameter",
+  "file404": "Error 404: File ",
+  "notFound": " not found",
+  "fileWrite404": "Missing 'text' query parameter",
+  "fileWrite505": "Error writing to file",
+  "textAppendedSuccessfully": "Text appended successfully"
 }

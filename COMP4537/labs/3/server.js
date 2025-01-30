@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { getDate } = require("./modules/utils");
 const messages = require("./locals/en.json");
+const fileName = "file.txt";
 
 const app = express();
 const PORT = 3000; // Change this if necessary
@@ -12,7 +13,7 @@ const PORT = 3000; // Change this if necessary
 app.get("/COMP4537/labs/3/getDate/", (req, res) => {
   const name = req.query.name;
   if (!name) {
-    return res.status(400).send("Missing 'name' query parameter");
+    return res.status(400).send(messages.getDate404);
   }
 
   const currentDate = getDate();
@@ -30,7 +31,7 @@ app.get("/COMP4537/labs/3/readFile/:filename", (req, res) => {
   if (!fs.existsSync(filePath)) {
     return res
       .status(404)
-      .send(`Error 404: File '${req.params.filename}' not found`);
+      .send(`${messages.file404}${req.params.filename}${messages.notFound}`);
   }
 
   const content = fs.readFileSync(filePath, "utf8");
@@ -41,14 +42,14 @@ app.get("/COMP4537/labs/3/readFile/:filename", (req, res) => {
 app.get("/COMP4537/labs/3/writeFile/", (req, res) => {
   const text = req.query.text;
   if (!text) {
-    return res.status(400).send("Missing 'text' query parameter");
+    return res.status(400).send(messages.fileWrite404);
   }
 
-  fs.appendFile("file.txt", text + "\n", (err) => {
+  fs.appendFile(fileName, text + "\n", (err) => {
     if (err) {
-      return res.status(500).send("Error writing to file");
+      return res.status(500).send(messages.fileWrite505);
     }
-    res.send("Text appended successfully");
+    res.send(messages.textAppendedSuccessfully);
   });
 });
 
