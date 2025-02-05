@@ -24,7 +24,7 @@ class FileService {
       throw new Error(`${fileName} ${messages.notFound}`);
     }
 
-    fs.appendFileSync(filePath, text + "\n");
+    fs.appendFileSync(filePath, text);
 
     return messages.textAppendedSuccessfully;
   }
