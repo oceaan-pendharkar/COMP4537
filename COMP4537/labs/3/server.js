@@ -61,10 +61,10 @@ class Server {
     }
 
     try {
-      const response = await this.fileService.writeFile(text);
+      const response = this.fileService.writeFile(text);
       res.send(response);
     } catch (error) {
-      res.status(500).send(messages.fileWrite505);
+      res.status(505).send(messages.fileWrite505);
     }
   }
 

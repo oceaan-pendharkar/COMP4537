@@ -18,12 +18,15 @@ class FileService {
   }
 
   writeFile(text) {
-    return new Promise((resolve, reject) => {
-      fs.appendFile(this.fileName, text + "\n", (err) => {
-        if (err) reject(messages.fileWriteError);
-        else resolve(messages.textAppendedSuccessfully);
-      });
-    });
+    const filePath = path.join(__dirname, "..", fileName);
+
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`${fileName} ${messages.notFound}`);
+    }
+
+    fs.appendFileSync(filePath, text + "\n");
+
+    return messages.textAppendedSuccessfully;
   }
 }
 
