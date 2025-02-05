@@ -18,7 +18,7 @@ class FileService {
   }
 
   writeFile(text) {
-    const filePath = path.join(__dirname, "..", fileName);
+    const filePath = path.join(__dirname, "..", this.fileName);
 
     if (!fs.existsSync(filePath)) {
       throw new Error(`${fileName} ${messages.notFound}`);
