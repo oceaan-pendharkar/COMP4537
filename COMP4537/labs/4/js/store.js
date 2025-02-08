@@ -4,7 +4,7 @@ fetch("./locals/en.json")
   .then((data) => (messages = data))
   .catch((err) => console.log("Error loading messages", err));
 
-import {endpoint} from "./endpoint.js";
+import { endpoint } from "./endpoint.js";
 
 const store = (word, definition) => {
   const xhttp = new XMLHttpRequest();
@@ -13,13 +13,13 @@ const store = (word, definition) => {
   xhttp.setRequestHeader("Content-Type", "application/json");
   xhttp.send(JSON.stringify({ word: word, definition: definition }));
   xhttp.onreadystatechange = () => {
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
+    if (xhttp.readyState == 4 && xhttp.status >= 200 && xhttp.status < 300) {
       document.getElementById("display").innerHTML = this.responseText;
     }
     if (xhttp.readyState == 4 && xhttp.status != 200) {
       document.getElementById(
         "display"
-      ).innerHTML = `${messages.error} ${xhttp.status}`;
+      ).innerHTML = `${messages.error} ${xhttp.status} ${messages.word} ${word} ${messages.alreadyExists}`;
     }
   };
 };
