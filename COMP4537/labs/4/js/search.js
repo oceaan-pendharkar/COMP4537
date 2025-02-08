@@ -5,7 +5,7 @@ fetch("./locals/en.json")
   .catch((err) => console.log("Error loading messages", err));
 
 let endpoint = "";
-fetch("./endpoint.js")
+fetch("./js/endpoint.js")
   .then((response) => response.text())
   .then((data) => (endpoint = data))
   .catch((err) => console.log("Error loading endpoint ", err));
