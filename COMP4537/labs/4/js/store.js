@@ -4,11 +4,7 @@ fetch("./locals/en.json")
   .then((data) => (messages = data))
   .catch((err) => console.log("Error loading messages", err));
 
-let endpoint = "";
-fetch("./js/endpoint.js")
-  .then((response) => response.text())
-  .then((data) => (endpoint = data))
-  .catch((err) => console.log("Error loading endpoint ", err));
+import {endpoint} from "./endpoint.js";
 
 const store = (word, definition) => {
   const xhttp = new XMLHttpRequest();
