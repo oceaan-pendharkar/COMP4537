@@ -5,6 +5,7 @@ fetch("./locals/en.json")
   .catch((err) => console.log("Error loading messages", err));
 
 import { endpoint } from "./endpoint.js";
+console.log(endpoint);
 
 const search = (word) => {
   const xhttp = new XMLHttpRequest();
@@ -27,6 +28,7 @@ const search = (word) => {
 
 //asked chatGPT how to assign the onlick event to the button
 document.getElementById("submitBtn").onclick = () => {
+  document.getElementById("display").innerHTML = "";
   const word = document.getElementById("word").value;
   //must start with a letter and end with a letter, and contain one or more letters
   if (/^[A-Za-z]+$/.test(word)) {

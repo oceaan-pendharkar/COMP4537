@@ -26,6 +26,7 @@ const store = (word, definition) => {
 
 //asked chatGPT how to assign the onlick event to the button
 document.getElementById("submitBtn").onclick = () => {
+  document.getElementById("display").innerHTML = "";
   const word = document.getElementById("word").value;
   const definition = document.getElementById("definition").value;
   //word must start with a letter and end with a letter, and contain one or more letters
