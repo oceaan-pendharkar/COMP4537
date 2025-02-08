@@ -1,5 +1,14 @@
-const messages = require("./locals/en.json");
-const endpoint = require("./endpoint.js");
+let messages = {};
+fetch("./locals/en.json")
+  .then((response) => response.json())
+  .then((data) => (messages = data))
+  .catch((err) => console.log("Error loading messages", err));
+
+let endpoint = "";
+fetch("./endpoint.js")
+  .then((response) => response.text())
+  .then((data) => (endpoint = data))
+  .catch((err) => console.log("Error loading endpoint ", err));
 
 const search = (word) => {
   const xhttp = new XMLHttpRequest();
