@@ -16,7 +16,7 @@ const store = (word, definition) => {
     if (xhttp.readyState == 4 && xhttp.status >= 200 && xhttp.status < 300) {
       document.getElementById("display").innerHTML = xhttp.responseText.message;
     }
-    if (xhttp.readyState == 4 && xhttp.status != 200) {
+    if (xhttp.readyState == 4 && xhttp.status >= 300) {
       let responseJson = JSON.parse(xhttp.responseText); // Parse JSON response
       document.getElementById(
         "display"
