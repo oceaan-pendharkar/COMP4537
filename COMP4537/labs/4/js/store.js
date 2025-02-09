@@ -17,9 +17,10 @@ const store = (word, definition) => {
       document.getElementById("display").innerHTML = xhttp.responseText.message;
     }
     if (xhttp.readyState == 4 && xhttp.status != 200) {
+      let responseJson = JSON.parse(xhttp.responseText); // Parse JSON response
       document.getElementById(
         "display"
-      ).innerHTML = `${messages.error} ${xhttp.status} - ${messages.word} ${word} ${messages.alreadyExists} - ${messages.responseNum} ${xhttp.responseText.requests}`;
+      ).innerHTML = `${messages.error} ${xhttp.status} - ${messages.word} ${word} ${messages.alreadyExists} - ${messages.responseNum} ${responseJson.requests}`;
     }
   };
 };
