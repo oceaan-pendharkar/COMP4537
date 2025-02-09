@@ -14,9 +14,9 @@ const store = (word, definition) => {
   xhttp.send(JSON.stringify({ word: word, definition: definition }));
   xhttp.onreadystatechange = () => {
     if (xhttp.readyState == 4) {
-      document.getElementById("display").innerHTML = JSON.parse(
-        xhttp.responseText.message
-      );
+      let responseJson = JSON.parse(xhttp.responseText); // Parse JSON response
+
+      document.getElementById("display").innerHTML = responseJson.message;
     }
   };
 };
