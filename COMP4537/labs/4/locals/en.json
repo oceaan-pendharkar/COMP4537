@@ -1,7 +1,7 @@
 {
   "word": "word",
   "NotFound": "not found",
-  "responseNum": "Response #",
+  "responseNum": "Request #",
   "invalid": " invalid",
   "error": "Error",
   "or": "or",
