@@ -13,14 +13,8 @@ const store = (word, definition) => {
   xhttp.setRequestHeader("Content-Type", "application/json");
   xhttp.send(JSON.stringify({ word: word, definition: definition }));
   xhttp.onreadystatechange = () => {
-    if (xhttp.readyState == 4 && xhttp.status >= 200 && xhttp.status < 300) {
+    if (xhttp.readyState == 4) {
       document.getElementById("display").innerHTML = xhttp.responseText.message;
-    }
-    if (xhttp.readyState == 4 && xhttp.status >= 300) {
-      let responseJson = JSON.parse(xhttp.responseText); // Parse JSON response
-      document.getElementById(
-        "display"
-      ).innerHTML = `${messages.error} ${xhttp.status} - ${messages.word} ${word} ${messages.alreadyExists} - ${messages.responseNum} ${responseJson.requests}`;
     }
   };
 };
