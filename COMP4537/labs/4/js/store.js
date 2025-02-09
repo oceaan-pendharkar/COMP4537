@@ -19,7 +19,7 @@ const store = (word, definition) => {
     if (xhttp.readyState == 4 && xhttp.status != 200) {
       document.getElementById(
         "display"
-      ).innerHTML = `${messages.error} ${xhttp.status} - ${messages.word} ${word} ${messages.alreadyExists} - ${messages.responseNum} ${xhttp.responseText.requests}}`;
+      ).innerHTML = `${messages.error} ${xhttp.status} - ${messages.word} ${word} ${messages.alreadyExists} - ${messages.responseNum} ${xhttp.responseText.requests}`;
     }
   };
 };
