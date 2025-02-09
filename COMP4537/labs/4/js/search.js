@@ -18,7 +18,8 @@ const search = (word) => {
       document.getElementById("display").innerHTML = this.responseText;
     }
     if (xhttp.readyState == 4 && xhttp.status != 200) {
-      let responseNum = this.requests;
+      let responseJson = JSON.parse(xhttp.responseText); // Parse JSON response
+      let responseNum = responseJson.requests; // Access the 'requests' key
       document.getElementById(
         "display"
       ).innerHTML = `${messages.responseNum}${this.responseText} ${messages.word} ${word} ${messages.NotFound}`;
