@@ -15,7 +15,10 @@ const search = (word) => {
   xhttp.send();
   xhttp.onreadystatechange = () => {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
-      document.getElementById("display").innerHTML = this.responseText;
+      let responseJson = JSON.parse(xhttp.responseText); // Parse JSON response
+      document.getElementById(
+        "display"
+      ).innerHTML = `${responseJson.word} - ${responseJson.definition} ${messages.responseNum} ${responseJson.requests}`;
     }
     if (xhttp.readyState == 4 && xhttp.status != 200) {
       let responseJson = JSON.parse(xhttp.responseText); // Parse JSON response
