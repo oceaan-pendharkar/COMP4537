@@ -22,7 +22,7 @@ const search = (word) => {
       let responseNum = responseJson.requests; // Access the 'requests' key
       document.getElementById(
         "display"
-      ).innerHTML = `${messages.responseNum}${this.responseText} ${messages.word} ${word} ${messages.NotFound}`;
+      ).innerHTML = `${messages.responseNum}${responseNum} ${messages.word} ${word} ${messages.NotFound}`;
     }
   };
 };
