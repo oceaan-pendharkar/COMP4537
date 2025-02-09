@@ -18,7 +18,7 @@ const search = (word) => {
       document.getElementById("display").innerHTML = this.responseText;
     }
     if (xhttp.readyState == 4 && xhttp.status != 200) {
-      let responseNum = this.responseText;
+      let responseNum = this.requests;
       document.getElementById(
         "display"
       ).innerHTML = `${messages.responseNum}${this.responseText} ${messages.word} ${word} ${messages.NotFound}`;
