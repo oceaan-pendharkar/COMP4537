@@ -14,10 +14,10 @@ const search = (word) => {
   xhttp.open("GET", `${endpoint}?word=${word}`, true);
   xhttp.send();
   xhttp.onreadystatechange = () => {
-    if (xhttp.readyState == 4 && this.status == 200) {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
       document.getElementById("display").innerHTML = this.responseText;
     }
-    if (xhttp.readyState == 4 && this.status != 200) {
+    if (xhttp.readyState == 4 && xhttp.status != 200) {
       let responseNum = this.responseText;
       document.getElementById(
         "display"
