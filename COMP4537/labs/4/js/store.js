@@ -1,8 +1,22 @@
 let messages = {};
-fetch("./locals/en.json")
-  .then((response) => response.json())
-  .then((data) => (messages = data))
-  .catch((err) => console.log("Error loading messages", err));
+
+//helped by chatGPT
+async function loadMessages() {
+  try {
+    const response = await fetch("./locals/en.json");
+    messages = await response.json();
+
+    // Set UI text
+    document.title = messages.storeWord;
+    document.getElementById("storeWord").innerHTML = messages.storeWord;
+    document.getElementById("wordText").innerHTML = messages["word:"];
+    document.getElementById("submitBtn").innerHTML = messages.submit;
+    document.getElementById("definitionText").innerHTML =
+      messages.definitionText;
+  } catch (err) {
+    console.log("Error loading messages", err);
+  }
+}
 
 import { endpoint } from "./endpoint.js";
 
@@ -36,3 +50,5 @@ document.getElementById("submitBtn").onclick = () => {
     ).innerHTML = `${messages.word} ${word} ${messages.or} ${messages.definition} ${definition} ${messages.invalid}`;
   }
 };
+
+loadMessages();

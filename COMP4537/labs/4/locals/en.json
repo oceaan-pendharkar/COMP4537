@@ -6,5 +6,10 @@
   "error": "Error",
   "or": "or",
   "definition": "definition",
-  "alreadyExists": "already exists"
+  "alreadyExists": "already exists",
+  "searchWord": "Search Word",
+  "word:": "Word:",
+  "submit": "Submit",
+  "storeWord": "Store Word",
+  "definitionText": "Definition:"
 }
