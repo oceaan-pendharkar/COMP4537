@@ -1,0 +1,5 @@
+.vercel
+package-lock.json
+node_modules
+.env
+labs/5/scripts
