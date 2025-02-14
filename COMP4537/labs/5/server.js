@@ -11,6 +11,10 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
   console.log(parsedUrl.pathname);
 
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
   if (req.method === "GET" && parsedUrl.pathname === "/posts") {
     try {
       const { rows } = await pool.query("SELECT * FROM posts");
