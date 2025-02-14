@@ -1,15 +1,11 @@
 {
   "version": 2,
   "builds": [{ "src": "server.js", "use": "@vercel/node" }],
-  "headers": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self' https://lab5-dyvvy02jo-oceaans-projects.vercel.app; connect-src *"
-        }
-      ]
+      "src": "/.*",
+      "dest": "/server.js",
+      "headers": { "key": "Access-Control-Allow-Origin", "value": "*" }
     }
   ]
 }
