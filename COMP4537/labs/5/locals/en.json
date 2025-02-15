@@ -1,0 +1,6 @@
+{
+  "invalidData":"Invalid data format. Expecting an array of objects.",
+  "invalidQuerySelect": "Invalid query. Only SELECT queries are allowed.",
+  "invalidQueryInsert": "Invalid query. Only INSERT queries are allowed.",
+  "routeNotFound": "Route not found."
+}

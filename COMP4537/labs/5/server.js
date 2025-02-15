@@ -1,6 +1,7 @@
 const http = require("http");
 const { Pool } = require("pg");
 require("dotenv").config();
+const messages = require("./locals/en.json");
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -11,7 +12,7 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
   console.log(parsedUrl.pathname);
 
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "https://justinsaintdev.com");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
@@ -34,9 +35,7 @@ const server = http.createServer(async (req, res) => {
         const { data } = JSON.parse(body);
 
         if (!Array.isArray(data) || data.length === 0) {
-          throw new Error(
-            "Invalid data format. Expecting an array of objects."
-          );
+          throw new Error(messages.invalidData);
         }
 
         const values = data.flatMap(({ name, date }) => [name, date]);
@@ -63,7 +62,7 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(
           JSON.stringify({
-            error: "Invalid query. Only SELECT queries are allowed.",
+            error: messages.invalidQuerySelect,
           })
         );
         return;
@@ -91,7 +90,7 @@ const server = http.createServer(async (req, res) => {
         const { sql } = JSON.parse(body);
 
         if (!sql || !sql.match(/^INSERT/i)) {
-          throw new Error("Invalid query. Only INSERT queries are allowed.");
+          throw new Error(messages.invalidQueryInsert);
         }
 
         //build SQL SELECT query
@@ -110,7 +109,7 @@ const server = http.createServer(async (req, res) => {
     });
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ error: "Route not found" }));
+    res.end(JSON.stringify({ error: messages.routeNotFound }));
   }
 });
 
