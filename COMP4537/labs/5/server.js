@@ -16,7 +16,14 @@ const server = http.createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.method === "GET" && parsedUrl.pathname === "/posts") {
+  if (req.method === "OPTIONS") {
+    res.writeHead(204, {
+      "Access-Control-Allow-Origin": "https://www.justinsaintdev.com/",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    });
+    res.end();
+  } else if (req.method === "GET" && parsedUrl.pathname === "/posts") {
     try {
       const { rows } = await pool.query("SELECT * FROM posts");
       res.writeHead(200, { "Content-Type": "application/json" });
@@ -65,7 +72,6 @@ const server = http.createServer(async (req, res) => {
             error: messages.invalidQuerySelect,
           })
         );
-        return;
       }
 
       //build SQL SELECT query
