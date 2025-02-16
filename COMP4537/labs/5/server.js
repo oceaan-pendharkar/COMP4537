@@ -19,7 +19,10 @@ const server = http.createServer(async (req, res) => {
       "Access-Control-Allow-Headers": "Content-Type",
     });
     res.end();
-  } else if (req.method === "GET" && parsedUrl.pathname === "/posts") {
+    return;
+  }
+
+  if (req.method === "GET" && parsedUrl.pathname === "/posts") {
     try {
       const { rows } = await pool.query("SELECT * FROM posts");
       res.writeHead(200, { "Content-Type": "application/json" });
