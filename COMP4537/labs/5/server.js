@@ -17,6 +17,7 @@ const server = http.createServer(async (req, res) => {
       "Access-Control-Allow-Origin": "https://justinsaintdev.com",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Credentials": "true",
     });
     res.end();
     return;
