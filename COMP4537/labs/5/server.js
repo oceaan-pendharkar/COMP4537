@@ -14,7 +14,7 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === "OPTIONS") {
     res.writeHead(204, {
-      "Access-Control-Allow-Origin": "https://justinsaintdev.com/",
+      "Access-Control-Allow-Origin": "https://justinsaintdev.com",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     });
