@@ -46,6 +46,9 @@ const server = http.createServer(async (req, res) => {
         }
 
         const values = data.flatMap(({ name, date }) => [name, date]);
+        await pool.query(
+          `CREATE TABLE IF NOT EXISTS posts (id SERIAL PRIMARY KEY, name TEXT NOT NULL, date TIMESTAMP NOT NULL)`
+        );
         const query = `INSERT INTO posts (name, date) VALUES ${data
           .map((_, i) => `($${i * 2 + 1}, $${i * 2 + 2})`)
           .join(", ")}`;
