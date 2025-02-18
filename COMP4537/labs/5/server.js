@@ -8,17 +8,25 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }, // Required for Neon PostgreSQL
 });
 
+// Function to set headers for all responses
+const setHeaders = (res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+};
+
 const server = http.createServer(async (req, res) => {
+  setHeaders(res); // Apply headers at the start for every request
+
   const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
   console.log(parsedUrl.pathname);
 
   if (req.method === "OPTIONS") {
-    res.writeHead(204, {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Credentials": "true",
-    });
+    res.writeHead(204);
     res.end();
     return;
   }
@@ -75,13 +83,12 @@ const server = http.createServer(async (req, res) => {
             error: messages.invalidQuerySelect,
           })
         );
+        return;
       }
 
-      //build SQL SELECT query
-      const parts = sql.split(";");
-      const query = parts[0];
-
+      const query = sql.split(";")[0];
       const { rows } = await pool.query(query);
+
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(rows));
     } catch (err) {
@@ -89,7 +96,6 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({ error: err.message }));
     }
   } else if (req.method === "POST" && parsedUrl.pathname === "/query") {
-    //get the sql query from the body
     let body = "";
     req.on("data", (chunk) => {
       body += chunk.toString();
@@ -102,11 +108,9 @@ const server = http.createServer(async (req, res) => {
           throw new Error(messages.invalidQueryInsert);
         }
 
-        //build SQL SELECT query
-        const parts = sql.split(";");
-        const query = parts[0];
-
+        const query = sql.split(";")[0];
         const result = await pool.query(query);
+
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(
           JSON.stringify({ success: true, rowsInserted: result.rowCount })
